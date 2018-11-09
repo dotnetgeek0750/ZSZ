@@ -111,6 +111,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\TrimToDBCModelBinder.cs" />
     <Compile Include="App_Start\ZSZExceptionFilter.cs" />
+    <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -128,8 +129,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Default\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ZSZ.CommonMVC\ZSZ.CommonMVC.csproj">
@@ -143,6 +144,10 @@
     <ProjectReference Include="..\ZSZ.IService\ZSZ.IService.csproj">
       <Project>{2a248d4c-9411-45df-9472-46eee20506aa}</Project>
       <Name>ZSZ.IService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZSZ.Service\ZSZ.Service.csproj">
+      <Project>{fc7b034d-665e-4f4f-b8aa-cafb032c51bc}</Project>
+      <Name>ZSZ.Service</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

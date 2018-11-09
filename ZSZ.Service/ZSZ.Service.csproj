@@ -80,8 +80,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminUserService.cs" />
+    <Compile Include="AttachmentService.cs" />
     <Compile Include="BaseService.cs" />
     <Compile Include="CityService.cs" />
+    <Compile Include="CommunityService.cs" />
     <Compile Include="Entities\AdminLogEntity.cs" />
     <Compile Include="Entities\AdminUserEntity.cs" />
     <Compile Include="Entities\AttachmentEntity.cs" />
@@ -97,6 +100,7 @@
     <Compile Include="Entities\RoleEntity.cs" />
     <Compile Include="Entities\SettingEntity.cs" />
     <Compile Include="Entities\UserEntity.cs" />
+    <Compile Include="HouseAppointmentService.cs" />
     <Compile Include="ModelConfig\AdminLogConfig.cs" />
     <Compile Include="ModelConfig\AdminUserConfig.cs" />
     <Compile Include="ModelConfig\AttachmentConfig.cs" />
@@ -119,6 +123,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ZSZ.Common\ZSZ.Common.csproj">
+      <Project>{4702e320-6789-4581-a6ec-17274947104c}</Project>
+      <Name>ZSZ.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZSZ.DTO\ZSZ.DTO.csproj">
+      <Project>{71DC31D2-902E-461E-ABA1-C4ED54AA0461}</Project>
+      <Name>ZSZ.DTO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ZSZ.IService\ZSZ.IService.csproj">
       <Project>{2a248d4c-9411-45df-9472-46eee20506aa}</Project>
       <Name>ZSZ.IService</Name>

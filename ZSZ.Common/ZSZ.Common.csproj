@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommonHelper.cs" />
     <Compile Include="RuPengSMSResult.cs" />
     <Compile Include="RuPengSMSSender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

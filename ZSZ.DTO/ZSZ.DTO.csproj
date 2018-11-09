@@ -40,7 +40,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminLogDTO.cs" />
+    <Compile Include="AdminUserDTO.cs" />
+    <Compile Include="AttachmentDTO.cs" />
+    <Compile Include="BaseDTO.cs" />
+    <Compile Include="CityDTO.cs" />
+    <Compile Include="CommunityDTO.cs" />
+    <Compile Include="HouseAppointmentDTO.cs" />
+    <Compile Include="HouseDTO.cs" />
+    <Compile Include="HousePicDTO.cs" />
+    <Compile Include="HouseSearchOptions.cs" />
+    <Compile Include="HouseSearchResult.cs" />
+    <Compile Include="IdNameDTO.cs" />
+    <Compile Include="OrderByType.cs" />
+    <Compile Include="PermissionDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegionDTO.cs" />
+    <Compile Include="RoleDTO.cs" />
+    <Compile Include="SettingDTO.cs" />
+    <Compile Include="UserDTO.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

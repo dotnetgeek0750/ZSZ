@@ -40,9 +40,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IAdminLogService.cs" />
+    <Compile Include="IAdminUserService.cs" />
+    <Compile Include="IAttachmentService.cs" />
     <Compile Include="ICityService.cs" />
+    <Compile Include="ICommunityService.cs" />
+    <Compile Include="IHouseAppointmentService.cs" />
+    <Compile Include="IHouseService.cs" />
+    <Compile Include="IIdNameService.cs" />
+    <Compile Include="IPermissionService.cs" />
+    <Compile Include="IRegionService.cs" />
+    <Compile Include="IRoleService.cs" />
     <Compile Include="IServiceSupport.cs" />
+    <Compile Include="ISettingService.cs" />
+    <Compile Include="IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ZSZ.DTO\ZSZ.DTO.csproj">
+      <Project>{71dc31d2-902e-461e-aba1-c4ed54aa0461}</Project>
+      <Name>ZSZ.DTO</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
