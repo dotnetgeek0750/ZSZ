@@ -109,6 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\TrimToDBCModelBinder.cs" />
     <Compile Include="App_Start\ZSZExceptionFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -138,6 +139,10 @@
     <ProjectReference Include="..\ZSZ.Common\ZSZ.Common.csproj">
       <Project>{4702e320-6789-4581-a6ec-17274947104c}</Project>
       <Name>ZSZ.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZSZ.IService\ZSZ.IService.csproj">
+      <Project>{2a248d4c-9411-45df-9472-46eee20506aa}</Project>
+      <Name>ZSZ.IService</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
