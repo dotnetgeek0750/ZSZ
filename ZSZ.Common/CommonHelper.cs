@@ -67,7 +67,7 @@ namespace ZSZ.Common
         /// </summary>
         /// <param name="len">要生成的验证码长度</param>
         /// <returns>验证码</returns>
-        public static string GenerateCaptchaCode(int len)
+        public static string CreateVerifyCode(int len)
         {
             char[] data = { 'a', 'c', 'd', 'e', 'f', 'g', 'k', 'm', 'p', 'r', 's', 't', 'w', 'x', 'y', '3', '4', '5', '7', '8' };
             StringBuilder sbCode = new StringBuilder();

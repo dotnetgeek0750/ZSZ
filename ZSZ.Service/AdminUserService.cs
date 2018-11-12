@@ -16,7 +16,7 @@ namespace ZSZ.Service
         public long AddAdminUser(string name, string phoneNum, string password, string email, long? cityId)
         {
             //加盐
-            var salt = CommonHelper.GenerateCaptchaCode(5);
+            var salt = CommonHelper.CreateVerifyCode(5);
 
             var user = new AdminUserEntity
             {

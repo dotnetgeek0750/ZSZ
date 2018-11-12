@@ -46,6 +46,7 @@
     <Compile Include="BaseDTO.cs" />
     <Compile Include="CityDTO.cs" />
     <Compile Include="CommunityDTO.cs" />
+    <Compile Include="HouseAddNewDTO.cs" />
     <Compile Include="HouseAppointmentDTO.cs" />
     <Compile Include="HouseDTO.cs" />
     <Compile Include="HousePicDTO.cs" />
