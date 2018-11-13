@@ -11,13 +11,13 @@ namespace ZSZ.Service
 {
     public class PermissionService : IPermissionService
     {
-        public long AddPermission(string permName,string description)
+        public long AddPermission(string permName, string description)
         {
             using (ZSZDbContext ctx = new ZSZDbContext())
             {
                 BaseService<PermissionEntity> permBS = new BaseService<PermissionEntity>(ctx);
-                bool exists = permBS.GetAll().Any(p=>p.Name==permName);
-                if(exists)
+                bool exists = permBS.GetAll().Any(p => p.Name == permName);
+                if (exists)
                 {
                     throw new ArgumentException("权限项已经存在");
                 }
@@ -30,22 +30,24 @@ namespace ZSZ.Service
             }
         }
 
+
+
         public void AddPermIds(long roleId, long[] permIds)
         {
             using (ZSZDbContext ctx = new ZSZDbContext())
             {
-                BaseService<RoleEntity> roleBS 
+                BaseService<RoleEntity> roleBS
                     = new BaseService<RoleEntity>(ctx);
                 var role = roleBS.GetById(roleId);
-                if(role==null)
+                if (role == null)
                 {
-                    throw new ArgumentException("roleId不存在"+roleId);
+                    throw new ArgumentException("roleId不存在" + roleId);
                 }
                 BaseService<PermissionEntity> permBS
                     = new BaseService<PermissionEntity>(ctx);
                 var perms = permBS.GetAll()
                     .Where(p => permIds.Contains(p.Id)).ToArray();
-                foreach(var perm in perms)
+                foreach (var perm in perms)
                 {
                     role.Permissions.Add(perm);
                 }
@@ -68,7 +70,7 @@ namespace ZSZ.Service
             using (ZSZDbContext ctx = new ZSZDbContext())
             {
                 BaseService<PermissionEntity> bs = new BaseService<PermissionEntity>(ctx);
-                return bs.GetAll().ToList().Select(p=>ToDTO(p)).ToArray();
+                return bs.GetAll().ToList().Select(p => ToDTO(p)).ToArray();
             }
         }
 
@@ -87,7 +89,7 @@ namespace ZSZ.Service
             using (ZSZDbContext ctx = new ZSZDbContext())
             {
                 BaseService<PermissionEntity> bs = new BaseService<PermissionEntity>(ctx);
-                var pe = bs.GetAll().SingleOrDefault(p=>p.Name==name);
+                var pe = bs.GetAll().SingleOrDefault(p => p.Name == name);
                 return pe == null ? null : ToDTO(pe);
             }
         }
@@ -124,6 +126,31 @@ namespace ZSZ.Service
                     role.Permissions.Add(perm);
                 }
                 ctx.SaveChanges();
+            }
+        }
+
+        public void UpdatePermission(long id, string permName, string description)
+        {
+            using (var ctx = new ZSZDbContext())
+            {
+                BaseService<PermissionEntity> bs = new BaseService<PermissionEntity>(ctx);
+                var perm = bs.GetById(id);
+                if (perm == null)
+                {
+                    throw new ArgumentException("id不存在");
+                }
+                perm.Name = permName;
+                perm.Description = description;
+                ctx.SaveChanges();
+            }
+        }
+
+        public void MarkDeleted(long id)
+        {
+            using (var ctx = new ZSZDbContext())
+            {
+                var bs = new BaseService<PermissionEntity>(ctx);
+                bs.MarkDeleted(id);
             }
         }
     }

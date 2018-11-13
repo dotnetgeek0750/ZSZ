@@ -1323,6 +1323,7 @@
     <Compile Include="App_Start\TrimToDBCModelBinder.cs" />
     <Compile Include="App_Start\ZSZExceptionFilter.cs" />
     <Compile Include="Controllers\MainController.cs" />
+    <Compile Include="Controllers\PermissionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1428,6 +1429,8 @@
     <Content Include="skin\yellow\Thumbs.db" />
     <Content Include="Views\Main\Index.cshtml" />
     <Content Include="Views\Main\Login.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Permission\List.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1451,6 +1454,10 @@
     <ProjectReference Include="..\ZSZ.Common\ZSZ.Common.csproj">
       <Project>{4702e320-6789-4581-a6ec-17274947104c}</Project>
       <Name>ZSZ.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZSZ.DTO\ZSZ.DTO.csproj">
+      <Project>{71DC31D2-902E-461E-ABA1-C4ED54AA0461}</Project>
+      <Name>ZSZ.DTO</Name>
     </ProjectReference>
     <ProjectReference Include="..\ZSZ.IService\ZSZ.IService.csproj">
       <Project>{2a248d4c-9411-45df-9472-46eee20506aa}</Project>

@@ -80,6 +80,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminLogService.cs" />
     <Compile Include="AdminUserService.cs" />
     <Compile Include="AttachmentService.cs" />
     <Compile Include="BaseService.cs" />

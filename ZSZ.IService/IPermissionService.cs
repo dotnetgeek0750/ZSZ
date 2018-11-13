@@ -7,9 +7,12 @@ using ZSZ.DTO;
 
 namespace ZSZ.IService
 {
-    public interface IPermissionService:IServiceSupport
+    public interface IPermissionService : IServiceSupport
     {
         long AddPermission(string permName, string description);
+
+        void UpdatePermission(long id, string permName, string description);
+
         PermissionDTO GetById(long id);
         PermissionDTO[] GetAll();
         PermissionDTO GetByName(String name);//GetByName("User.Add")
@@ -22,6 +25,8 @@ namespace ZSZ.IService
 
         //更新角色role的权限项：先删除再添加
         void UpdatePermIds(long roleId, long[] permIds);
+
+        void MarkDeleted(long id);
     }
 
 }

@@ -24,6 +24,7 @@ namespace ZSZ.AdminWeb
 
             ModelBinders.Binders.Add(typeof(string), new TrimToDBCModelBinder());
 
+            GlobalFilters.Filters.Add(new CommonMVC.JsonNetActionFilter());
 
             #region AutoFac
 

@@ -1,34 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZSZ.Common;
 using ZSZ.DTO;
 using ZSZ.IService;
 using ZSZ.Service.Entities;
+using System.Data.Entity;
+using ZSZ.Common;
 
 namespace ZSZ.Service
 {
     public class AdminUserService : IAdminUserService
     {
-        public long AddAdminUser(string name, string phoneNum, string password, string email, long? cityId)
+        public long AddAdminUser(string name, string phoneNum, 
+            string password, string email, long? cityId)
         {
-            //加盐
-            var salt = CommonHelper.CreateVerifyCode(5);
-
-            var user = new AdminUserEntity
+            AdminUserEntity user = new AdminUserEntity();
+            user.CityId = cityId;
+            user.Email = email;
+            user.Name = name;
+            user.PhoneNum = phoneNum;
+            string salt = CommonHelper.CreateVerifyCode(5);//盐
+            user.PasswordSalt = salt;
+            //Md5(盐+用户密码)
+            string pwdHash = CommonHelper.CalcMD5(salt+password);
+            user.PasswordHash = pwdHash;
+            using (ZSZDbContext ctx = new ZSZDbContext())
             {
-                CityId = cityId,
-                Email = email,
-                Name = name,
-                PhoneNum = phoneNum,
-                PasswordSalt = salt,
-                PasswordHash = CommonHelper.CalcMD5(salt + password),
-            };
-            using (var ctx = new ZSZDbContext())
-            {
+                BaseService<AdminUserEntity> bs 
+                    = new BaseService<AdminUserEntity>(ctx);
+                bool exists = bs.GetAll().Any(u => u.PhoneNum == phoneNum);
+                if(exists)
+                {
+                    throw new ArgumentException("手机号已经存在"+phoneNum);
+                }
                 ctx.AdminUsers.Add(user);
                 ctx.SaveChanges();
                 return user.Id;
@@ -37,89 +43,148 @@ namespace ZSZ.Service
 
         public bool CheckLogin(string phoneNum, string password)
         {
-            throw new NotImplementedException();
-        }
-
-        public AdminUserDTO[] GetAll(long? cityId)
-        {
-            using (var ctx = new ZSZDbContext())
+            using (ZSZDbContext ctx = new ZSZDbContext())
             {
                 BaseService<AdminUserEntity> bs = new BaseService<AdminUserEntity>(ctx);
-                var all = bs.GetAll().Include(p => p.City)
-                    .AsNoTracking().Where(p => p.CityId == cityId);
-                return all.Select(p => TODTO(p)).ToArray();
+                //除了错不可怕，最怕的是有错但是表面“风平浪静”
+                var user = bs.GetAll().SingleOrDefault(u=>u.PhoneNum==phoneNum);
+                if (user == null)
+                {
+                    return false;
+                }
+                string dbHash = user.PasswordHash;
+                string userHash = CommonHelper.CalcMD5(user.PasswordSalt+password);
+                //比较数据库中的PasswordHash是否和MD5(salt+用户输入密码)一直
+                return userHash == dbHash;
             }
+        }
+
+        private AdminUserDTO ToDTO(AdminUserEntity user)
+        {
+            AdminUserDTO dto = new AdminUserDTO();
+            dto.CityId = user.CityId;
+            if(user.City!=null)
+            {
+                dto.CityName = user.City.Name;//需要Include提升性能
+                //如鹏总部（北京）、如鹏网上海分公司、如鹏广州分公司、如鹏北京分公司
+            }
+            else
+            {
+                dto.CityName = "总部";
+            }
+            
+            dto.CreateDateTime = user.CreateDateTime;
+            dto.Email = user.Email;
+            dto.Id = user.Id;
+            dto.LastLoginErrorDateTime = user.LastLoginErrorDateTime;
+            dto.LoginErrorTimes = user.LoginErrorTimes;
+            dto.Name = user.Name;
+            dto.PhoneNum = user.PhoneNum;
+            return dto;
         }
 
         public AdminUserDTO[] GetAll()
         {
-            using (var ctx = new ZSZDbContext())
+            using (ZSZDbContext ctx = new ZSZDbContext())
             {
-                BaseService<AdminUserEntity> bs = new BaseService<AdminUserEntity>(ctx);
-                return bs.GetAll().Include(p => p.City)
-                    .AsNoTracking().Select(p => TODTO(p)).ToArray();
+                //using System.Data.Entity;才能在IQueryable中用Include、AsNoTracking
+                BaseService<AdminUserEntity> bs 
+                    = new BaseService<AdminUserEntity>(ctx);
+                return bs.GetAll().Include(u=>u.City)
+                    .AsNoTracking().ToList().Select(u => ToDTO(u)).ToArray();
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cityId">如果为null则获取总部的管理员；否则是获取某个地区的</param>
+        /// <returns></returns>
+        public AdminUserDTO[] GetAll(long? cityId)
+        {
+            using (ZSZDbContext ctx = new ZSZDbContext())
+            {
+                BaseService<AdminUserEntity> bs
+                    = new BaseService<AdminUserEntity>(ctx);
+                //CityId is null;CityId=3
+                var all = bs.GetAll().Include(u => u.City)
+                    .AsNoTracking().Where(u => u.CityId == cityId);
+                return all.ToList().Select(u => ToDTO(u)).ToArray();
             }
         }
 
         public AdminUserDTO GetById(long id)
         {
-            using (var ctx = new ZSZDbContext())
+            using (ZSZDbContext ctx = new ZSZDbContext())
             {
-                BaseService<AdminUserEntity> bs = new BaseService<AdminUserEntity>(ctx);
-                var user = bs.GetAll().Include(p => p.City).Where(p => p.Id == id).SingleOrDefault();
-                if (user == null)
+                BaseService<AdminUserEntity> bs
+                    = new BaseService<AdminUserEntity>(ctx);
+                //这里不能用bs.GetById(id);因为无法Include、AsNoTracking()等
+                var user = bs.GetAll().Include(u => u.City)
+                    .AsNoTracking().SingleOrDefault(u=>u.Id==id);
+                    //.AsNoTracking().Where(u=>u.Id==id).SingleOrDefault();
+                //var user = bs.GetById(id); 用include就不能用GetById
+                if (user==null)
                 {
                     return null;
                 }
-                return TODTO(user);
+                return ToDTO(user);
             }
         }
 
         public AdminUserDTO GetByPhoneNum(string phoneNum)
         {
-            using (var ctx = new ZSZDbContext())
+            using (ZSZDbContext ctx = new ZSZDbContext())
             {
-                BaseService<AdminUserEntity> bs = new BaseService<AdminUserEntity>(ctx);
-                var users = bs.GetAll().Include(p => p.City)
-                    .AsNoTracking()
-                    .Where(p => p.PhoneNum == phoneNum);
+                BaseService<AdminUserEntity> bs
+                    = new BaseService<AdminUserEntity>(ctx);
+                var users = bs.GetAll().Include(u => u.City)
+                    .AsNoTracking().Where(u => u.PhoneNum == phoneNum);
                 int count = users.Count();
-                if (count <= 0)
+                if(count <= 0)
                 {
                     return null;
                 }
-                else if (count == 1)
+                else if(count==1)
                 {
-                    return TODTO(users.Single());
+                    return ToDTO(users.Single());
                 }
                 else
                 {
-                    throw new ApplicationException($"找到多个手机号为{phoneNum}的记录");
+                    throw new ApplicationException("找到多个手机号为"+phoneNum+"的管理员");
                 }
             }
         }
 
+        //HasPermission(5,"User.Add")
         public bool HasPermission(long adminUserId, string permissionName)
         {
-            using (var ctx = new ZSZDbContext())
+            using (ZSZDbContext ctx = new ZSZDbContext())
             {
-                BaseService<AdminUserEntity> bs = new BaseService<AdminUserEntity>(ctx);
+                BaseService<AdminUserEntity> bs
+                    = new BaseService<AdminUserEntity>(ctx);
+                var user = bs.GetAll().Include(u => u.Roles)
+                    .AsNoTracking().SingleOrDefault(u=>u.Id==adminUserId);
                 //var user = bs.GetById(adminUserId);
-                var user = bs.GetAll().Include(p => p.Roles).AsNoTracking()
-                    .SingleOrDefault(p => p.Id == adminUserId);
-                if (user == null)
+                if (user==null)
                 {
-                    throw new ArgumentException($"找不到ID={adminUserId}的用户");
+                    throw new ArgumentException("找不到id="+adminUserId+"的用户");
                 }
-                return user.Roles.SelectMany(p => p.Permissions).Any(p => p.Name == permissionName);
+                //每个Role都有一个Permissions属性
+                //Roles.SelectMany(r => r.Permissions)就是遍历Roles的每一个Role
+                //然后把每个Role的Permissions放到一个集合中
+                //IEnumerable<PermissionEntity>
+                return user.Roles.SelectMany(r => r.Permissions)
+                    .Any(p=>p.Name==permissionName);
             }
         }
 
         public void MarkDeleted(long adminUserId)
         {
-            using (var ctx = new ZSZDbContext())
+            using (ZSZDbContext ctx = new ZSZDbContext())
             {
-                BaseService<AdminUserEntity> bs = new BaseService<AdminUserEntity>(ctx);
+                BaseService<AdminUserEntity> bs 
+                    = new BaseService<AdminUserEntity>(ctx);
                 bs.MarkDeleted(adminUserId);
             }
         }
@@ -134,40 +199,26 @@ namespace ZSZ.Service
             throw new NotImplementedException();
         }
 
-        public void UpdateAdminUser(long id, string name, string phoneNum, string password, string email, long? cityId)
+        public void UpdateAdminUser(long id, string name, string phoneNum, 
+            string password, string email, long? cityId)
         {
-            using (var ctx = new ZSZDbContext())
+            using (ZSZDbContext ctx = new ZSZDbContext())
             {
-                BaseService<AdminUserEntity> bs = new BaseService<AdminUserEntity>(ctx);
+                BaseService<AdminUserEntity> bs
+                    = new BaseService<AdminUserEntity>(ctx);
                 var user = bs.GetById(id);
-                if (user == null)
+                if(user==null)
                 {
-                    throw new ArgumentException($"找不到ID={id}的管理员");
+                    throw new ArgumentException("找不到id="+id+"的管理员");
                 }
                 user.Name = name;
                 user.PhoneNum = phoneNum;
                 user.Email = email;
-                user.PasswordHash = CommonHelper.CalcMD5(user.PasswordSalt + password);
-                user.CityId = cityId;
+                user.PasswordHash = 
+                    CommonHelper.CalcMD5(user.PasswordSalt+password);
+                user.CityId = cityId;                
                 ctx.SaveChanges();
             }
-        }
-
-
-        private AdminUserDTO TODTO(AdminUserEntity user)
-        {
-            AdminUserDTO dto = new AdminUserDTO
-            {
-                CityId = user.CityId,
-                CityName = user.City == null ? "总部" : user.City.Name,//需要Include提升性能
-                CreateDateTime = user.CreateDateTime,
-                Email = user.Email,
-                Id = user.Id,
-                LastLoginErrorDateTime = user.LastLoginErrorDateTime,
-                Name = user.Name,
-                PhoneNum = user.PhoneNum,
-            };
-            return dto;
         }
     }
 }
