@@ -64,9 +64,7 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -643,9 +641,6 @@
     <Content Include="lib\ueditor\1.4.3\lang\zh-cn\images\music.png" />
     <Content Include="lib\ueditor\1.4.3\lang\zh-cn\images\upload.png" />
     <Content Include="lib\ueditor\1.4.3\lang\zh-cn\zh-cn.js" />
-    <Content Include="lib\ueditor\1.4.3\net\Bin\Newtonsoft.Json.dll" />
-    <Content Include="lib\ueditor\1.4.3\net\Bin\Newtonsoft.Json.pdb" />
-    <Content Include="lib\ueditor\1.4.3\net\Bin\Newtonsoft.Json.xml" />
     <Content Include="lib\ueditor\1.4.3\net\net.sln" />
     <Content Include="lib\ueditor\1.4.3\themes\default\css\ueditor.css" />
     <Content Include="lib\ueditor\1.4.3\themes\default\css\ueditor.min.css" />
@@ -1335,6 +1330,8 @@
     <Compile Include="lib\ueditor\1.4.3\net\App_Code\NotSupportedHandler.cs" />
     <Compile Include="lib\ueditor\1.4.3\net\App_Code\PathFormater.cs" />
     <Compile Include="lib\ueditor\1.4.3\net\App_Code\UploadHandler.cs" />
+    <Compile Include="Models\PermissionAddNewModel.cs" />
+    <Compile Include="Models\PermissionEditModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1431,6 +1428,8 @@
     <Content Include="Views\Main\Login.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Permission\List.cshtml" />
+    <Content Include="Views\Permission\Add.cshtml" />
+    <Content Include="Views\Permission\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1444,7 +1443,7 @@
     <Folder Include="lib\Highcharts\4.1.7\exporting-server\java\highcharts-export\highcharts-export-convert\target\surefire\" />
     <Folder Include="lib\Highcharts\4.1.7\exporting-server\java\highcharts-export\highcharts-export-web\target\generated-sources\annotations\" />
     <Folder Include="lib\Highcharts\4.1.7\exporting-server\java\highcharts-export\highcharts-export-web\target\surefire\" />
-    <Folder Include="Models\" />
+    <Folder Include="lib\ueditor\1.4.3\net\Bin\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ZSZ.CommonMVC\ZSZ.CommonMVC.csproj">
