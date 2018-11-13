@@ -15,14 +15,18 @@
     <script type="text/javascript">
         $(function () {
             $("#btnSave").click(function () {
+
+                var formAdd = $("#formAdd").serializeArray();
+
                 $.ajax({
                     url: "/Permission/Add",
                     async: false,
                     type: "post",
-                    data: {
-                        name: $("#name").val(),
-                        description: $("#description").val(),
-                    },
+                    //data: {
+                    //    name: $("#name").val(),
+                    //    description: $("#description").val(),
+                    //},
+                    data: formAdd,
                     success: function (res) {
                         if (res.status == "ok") {
                             //刷新父窗口
@@ -39,5 +43,4 @@
             });
         });
     </script>
-
 }

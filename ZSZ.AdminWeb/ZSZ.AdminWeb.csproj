@@ -1319,6 +1319,7 @@
     <Compile Include="App_Start\ZSZExceptionFilter.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\PermissionController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1332,6 +1333,7 @@
     <Compile Include="lib\ueditor\1.4.3\net\App_Code\UploadHandler.cs" />
     <Compile Include="Models\PermissionAddNewModel.cs" />
     <Compile Include="Models\PermissionEditModel.cs" />
+    <Compile Include="Models\RoleAddModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1430,6 +1432,8 @@
     <Content Include="Views\Permission\List.cshtml" />
     <Content Include="Views\Permission\Add.cshtml" />
     <Content Include="Views\Permission\Edit.cshtml" />
+    <Content Include="Views\Role\Add.cshtml" />
+    <Content Include="Views\Role\List.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

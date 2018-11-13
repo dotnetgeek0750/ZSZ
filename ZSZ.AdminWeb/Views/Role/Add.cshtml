@@ -1,0 +1,22 @@
+﻿@model ZSZ.DTO.PermissionDTO[]
+@{
+    ViewBag.Title = "新增角色";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form id="formAdd">
+
+    名称：<input type="text" name="name" id="name" />
+    <div class="row c1">
+        @foreach (var perm in Model)
+        {
+            <div class="col-xs-12 col-sm-3">
+                <input type="checkbox" id="PermissionIds_@perm.Id" name="PermissionIds" value="@perm.Id" />
+                <label for="PermissionIds_@perm.Id">@perm.Name</label>
+                <!--有Label For 才会点击文字的时候选中CheckBox-->
+            </div>
+        }
+    </div>
+    <input type="button" value="保存" id="btnSave" />
+</form>
+
