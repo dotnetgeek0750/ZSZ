@@ -1334,6 +1334,8 @@
     <Compile Include="Models\PermissionAddNewModel.cs" />
     <Compile Include="Models\PermissionEditModel.cs" />
     <Compile Include="Models\RoleAddModel.cs" />
+    <Compile Include="Models\RoleEditGetModel.cs" />
+    <Compile Include="Models\RoleEditModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1434,6 +1436,7 @@
     <Content Include="Views\Permission\Edit.cshtml" />
     <Content Include="Views\Role\Add.cshtml" />
     <Content Include="Views\Role\List.cshtml" />
+    <Content Include="Views\Role\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

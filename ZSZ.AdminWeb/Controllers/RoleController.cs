@@ -47,7 +47,22 @@ namespace ZSZ.AdminWeb.Controllers
         {
             var role = roleService.GetById(id);
             var rolePerms = perService.GetByRoleId(id);
-            return View();
+            var allPerms = perService.GetAll();
+            RoleEditGetModel model = new RoleEditGetModel
+            {
+                AllPerms = allPerms,
+                RolePerms = rolePerms,
+                Role = role,
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(RoleEditModel model)
+        {
+            roleService.Update(model.Id, model.Name);
+            perService.UpdatePermIds(model.Id, model.PermissionIds);
+            return Json(new AjaxResult { Status = "ok" });
         }
     }
 }

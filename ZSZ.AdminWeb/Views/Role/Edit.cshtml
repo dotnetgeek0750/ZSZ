@@ -1,0 +1,63 @@
+﻿@model ZSZ.AdminWeb.Models.RoleEditGetModel
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form id="formEdit">
+    <input type="hidden" name="id" id="Id" value="@Model.Role.Id" />
+    名称：<input type="text" name="name" id="name" value="@Model.Role.Name" />
+    
+    @foreach (var perm in Model.AllPerms)
+    {
+        <div class="col-xs-12 col-sm-3">
+            <input type="checkbox" checked="@Model.RolePerms.Select(p=>p.Id).Contains(perm.Id)" id="PermissionIds_@perm.Id" name="PermissionIds" value="@perm.Id" />
+            <label for="PermissionIds_@perm.Id">@perm.Name</label>
+            <!--有Label For 才会点击文字的时候选中CheckBox-->
+        </div>
+    }
+
+    <input type="submit" value="保存" id="btnSave" />
+</form>
+
+
+@section FooterScript
+{
+    <script type="text/javascript">
+        $(function () {
+            $("#btnSave").click(function () {
+                $.ajax({
+                    url: "/Role/Edit",
+                    async: false,
+                    type: "post",
+                    data: {
+                        id: $("#Id").val(),
+                        name: $("#name").val(),
+                        description: $("#description").val(),
+                    },
+                    success: function (res) {
+                        if (res.status == "ok") {
+                            //刷新父窗口
+                            parent.location.reload();
+                        }
+                        else {
+                            alert("出错了");
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        // 状态码
+                        console.log(XMLHttpRequest.status);
+                        // 状态
+                        console.log(XMLHttpRequest.readyState);
+                        // 错误信息
+                        console.log(textStatus);
+
+                        alert("error");
+                    }
+                });
+            });
+        });
+    </script>
+
+}
+
