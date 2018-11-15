@@ -1,0 +1,43 @@
+﻿@model ZSZ.AdminWeb.Models.AdminUserAddViewModel
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form>
+    <p>
+        姓名： <input type="text" name="phoneNum" />
+    </p>
+    <p>
+        密码： <input type="password" name="password" />
+    </p>
+    <p>
+        确认密码：<input type="password" name="password2" />
+    </p>
+    <p>
+        邮箱：<input type="text" name="email" />
+    </p>
+    <p>
+        @Html.DropDownList("cityId",
+                 new SelectList
+                 (
+                     Model.Cities,
+                     nameof(ZSZ.DTO.CityDTO.Id),
+                     nameof(ZSZ.DTO.CityDTO.Name))
+                 );
+    </p>
+    <p>
+        @foreach (var perm in Model.Roles)
+        {
+            <div>
+                <input type="checkbox" id="RoleIds_@perm.Id" name="RoleIds" />
+                <label for="RoleIds_@perm.Id">@perm.Name</label>
+            </div>
+        }
+    </p>
+    <div>
+        <input type="button" value="保存" id="btnSave" />
+    </div>
+</form>
+
+

@@ -20,11 +20,17 @@ namespace ZSZ.AdminWeb
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
             log4net.Config.XmlConfigurator.Configure();
-            GlobalFilters.Filters.Add(new ZSZExceptionFilter());
+           
 
             ModelBinders.Binders.Add(typeof(string), new TrimToDBCModelBinder());
 
+            #region AOP Filter注册
+           
             GlobalFilters.Filters.Add(new CommonMVC.JsonNetActionFilter());
+            GlobalFilters.Filters.Add(new ZSZAuthorizationFilter());
+            GlobalFilters.Filters.Add(new ZSZExceptionFilter());
+
+            #endregion
 
             #region AutoFac
 

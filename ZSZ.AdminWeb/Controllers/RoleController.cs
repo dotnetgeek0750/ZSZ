@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ZSZ.AdminWeb.App_Start;
 using ZSZ.AdminWeb.Models;
 using ZSZ.CommonMVC;
 using ZSZ.IService;
@@ -27,9 +28,28 @@ namespace ZSZ.AdminWeb.Controllers
             return Json(new AjaxResult { Status = "ok" });
         }
 
+
+        public ActionResult BatchDelete(long[] selectIds)
+        {
+            foreach (var id in selectIds)
+            {
+                roleService.MarkDeleted(id);
+            }
+            return Json(new AjaxResult { Status = "ok" });
+        }
+
         [HttpGet]
         public ActionResult Add()
         {
+            //检查Model验证是否通过
+            if (!ModelState.IsValid)
+            {
+                return Json(new AjaxResult
+                {
+                    Status = "error",
+                    ErrorMsg = MVCHelper.GetValidMsg(ModelState),
+                });
+            }
             var perms = perService.GetAll();
             return View(perms);
         }

@@ -50,6 +50,12 @@
     <Reference Include="Autofac.Integration.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.Mvc5.4.0.2\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="CaptchaGen, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CaptchaGen.1.0.0\lib\net40\CaptchaGen.dll</HintPath>
+    </Reference>
+    <Reference Include="CodeCarvings.Piczard, Version=1.2.3.0, Culture=neutral, PublicKeyToken=88d00d4422733d60, processorArchitecture=MSIL">
+      <HintPath>..\packages\CodeCarvings.Piczard.1.2.3.3\lib\CodeCarvings.Piczard.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -139,6 +145,7 @@
     <Content Include="images\sort_desc.png" />
     <Content Include="images\totop.png" />
     <Content Include="images\user.png" />
+    <Content Include="images\watermark\water.jpg" />
     <Content Include="js\de_DE.txt" />
     <Content Include="js\H-ui.admin.js" />
     <Content Include="js\H-ui.js" />
@@ -1314,9 +1321,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\CheckPermissionAttribute.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\TrimToDBCModelBinder.cs" />
+    <Compile Include="App_Start\ZSZAuthorizationFilter.cs" />
     <Compile Include="App_Start\ZSZExceptionFilter.cs" />
+    <Compile Include="Controllers\AdminUserController.cs" />
+    <Compile Include="Controllers\HouseController.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\PermissionController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
@@ -1331,6 +1342,8 @@
     <Compile Include="lib\ueditor\1.4.3\net\App_Code\NotSupportedHandler.cs" />
     <Compile Include="lib\ueditor\1.4.3\net\App_Code\PathFormater.cs" />
     <Compile Include="lib\ueditor\1.4.3\net\App_Code\UploadHandler.cs" />
+    <Compile Include="Models\AdminUserAddViewModel.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\PermissionAddNewModel.cs" />
     <Compile Include="Models\PermissionEditModel.cs" />
     <Compile Include="Models\RoleAddModel.cs" />
@@ -1437,6 +1450,8 @@
     <Content Include="Views\Role\Add.cshtml" />
     <Content Include="Views\Role\List.cshtml" />
     <Content Include="Views\Role\Edit.cshtml" />
+    <Content Include="Views\AdminUser\Add.cshtml" />
+    <Content Include="Views\House\PicUpload.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
