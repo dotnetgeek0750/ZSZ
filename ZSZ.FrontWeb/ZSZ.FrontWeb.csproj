@@ -104,7 +104,83 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="css\all.css" />
+    <Content Include="css\app.css" />
+    <Content Include="css\base.css" />
+    <Content Include="css\loaders.min.css" />
+    <Content Include="css\loading.css" />
+    <Content Include="css\mui.min.css" />
+    <Content Include="css\mui.picker.min.css" />
+    <Content Include="css\page.css" />
+    <Content Include="css\swiper.min.css" />
     <Content Include="Global.asax" />
+    <Content Include="img\bao.png" />
+    <Content Include="img\bg.jpg" />
+    <Content Include="img\bg.png" />
+    <Content Include="img\che.png" />
+    <Content Include="img\checketwo.png" />
+    <Content Include="img\checktwo.png" />
+    <Content Include="img\chuang.png" />
+    <Content Include="img\close.png" />
+    <Content Include="img\closetwo.png" />
+    <Content Include="img\detail-iocn001.png" />
+    <Content Include="img\detail-iocn01.png" />
+    <Content Include="img\dui.png" />
+    <Content Include="img\fang.png" />
+    <Content Include="img\huangbg.png" />
+    <Content Include="img\index-banner.jpg" />
+    <Content Include="img\left.png" />
+    <Content Include="img\left2.png" />
+    <Content Include="img\lou.png" />
+    <Content Include="img\lvbg.png" />
+    <Content Include="img\map.png" />
+    <Content Include="img\people.png" />
+    <Content Include="img\right.png" />
+    <Content Include="img\right2.png" />
+    <Content Include="img\self.png" />
+    <Content Include="img\shang.png" />
+    <Content Include="img\tel.jpg" />
+    <Content Include="img\touxiang.png" />
+    <Content Include="img\water.png" />
+    <Content Include="img\woshou.png" />
+    <Content Include="img\xia.png" />
+    <Content Include="img\xiu.png" />
+    <Content Include="img\zhi.png" />
+    <Content Include="js\app.js" />
+    <Content Include="js\city.data-3.js" />
+    <Content Include="js\city.data.js" />
+    <Content Include="js\fastclick.js" />
+    <Content Include="js\global.js" />
+    <Content Include="js\hmt.js" />
+    <Content Include="js\jquery-1.8.3.min.js" />
+    <Content Include="js\jquery.leanModal.min.js" />
+    <Content Include="js\jquery.min.js" />
+    <Content Include="js\jquery.SuperSlide.2.1.js" />
+    <Content Include="js\menu.js" />
+    <Content Include="js\mobiscroll.2.13.2.js" />
+    <Content Include="js\mui.min.js" />
+    <Content Include="js\mui.picker.min.js" />
+    <Content Include="js\psong.js" />
+    <Content Include="js\rem.js" />
+    <Content Include="js\swiper.jquery.min.js" />
+    <Content Include="js\swiper.min.js" />
+    <Content Include="js\tchuang.js" />
+    <Content Include="js\yhq.js" />
+    <Content Include="slick\ajax-loader.gif" />
+    <Content Include="slick\slick.css" />
+    <Content Include="slick\slick.js" />
+    <Content Include="slick\slick.min.js" />
+    <Content Include="upload\1.jpg" />
+    <Content Include="upload\2.jpg" />
+    <Content Include="upload\3.jpg" />
+    <Content Include="upload\4.jpg" />
+    <Content Include="upload\ht.jpg" />
+    <Content Include="upload\list-img.jpg" />
+    <Content Include="upload\list-tu.jpg" />
+    <Content Include="upload\map.jpg" />
+    <Content Include="upload\room.jpg" />
+    <Content Include="upload\roomlist.jpg" />
+    <Content Include="upload\yunshu.jpg" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +188,7 @@
     <Compile Include="App_Start\TrimToDBCModelBinder.cs" />
     <Compile Include="App_Start\ZSZExceptionFilter.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
+    <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -119,7 +196,19 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
+    <Content Include="css\iconfont.eot" />
+    <Content Include="css\iconfont.svg" />
+    <Content Include="css\iconfont.ttf" />
+    <Content Include="css\iconfont.woff" />
+    <Content Include="fonts\mui.ttf" />
     <None Include="packages.config" />
+    <Content Include="slick\fonts\slick.eot" />
+    <Content Include="slick\fonts\slick.svg" />
+    <Content Include="slick\fonts\slick.ttf" />
+    <Content Include="slick\fonts\slick.woff" />
+    <Content Include="slick\slick.scss" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Main\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
