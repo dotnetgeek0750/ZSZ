@@ -50,6 +50,7 @@
     <Compile Include="JsonNetResult.cs" />
     <Compile Include="MVCHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RuPengPager.cs" />
     <Compile Include="TrimToDBCModelBinder.cs" />
   </ItemGroup>
   <ItemGroup>
