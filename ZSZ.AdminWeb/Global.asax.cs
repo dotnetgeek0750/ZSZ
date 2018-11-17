@@ -26,7 +26,7 @@ namespace ZSZ.AdminWeb
 
             #region AOP Filter注册
            
-            GlobalFilters.Filters.Add(new CommonMVC.JsonNetActionFilter());
+            GlobalFilters.Filters.Add(new JsonNetActionFilter());
             GlobalFilters.Filters.Add(new ZSZAuthorizationFilter());
             GlobalFilters.Filters.Add(new ZSZExceptionFilter());
 

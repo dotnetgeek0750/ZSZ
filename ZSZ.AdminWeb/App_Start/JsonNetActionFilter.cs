@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
-namespace ZSZ.CommonMVC
+namespace ZSZ.AdminWeb.App_Start
 {
     public class JsonNetActionFilter : IActionFilter
     {

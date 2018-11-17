@@ -12,14 +12,14 @@ namespace ZSZ.Common
     {
         public string UserName { get; set; }
         public string AppKey { get; set; }
-        public RuPengSMSSender SendSMS(string templateId, string code, string phoneNum)
+        public RuPengSMSResult SendSMS(string templateId, string code, string phoneNum)
         {
             WebClient wc = new WebClient();
             string url = $"http://sms.rupeng.cn/SendSms.ashx?username={Uri.EscapeDataString(UserName)}&appKey={Uri.EscapeDataString(AppKey)}&templateId={templateId}&code={code}&phoneNum={phoneNum}";
             wc.Encoding = Encoding.UTF8;
             string res = wc.DownloadString(url);
             JavaScriptSerializer jss = new JavaScriptSerializer();
-            RuPengSMSSender result = jss.Deserialize<RuPengSMSSender>(res);
+            RuPengSMSResult result = jss.Deserialize<RuPengSMSResult>(res);
             return result;
         }
     }

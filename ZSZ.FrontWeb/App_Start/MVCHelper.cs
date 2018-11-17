@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
-namespace ZSZ.CommonMVC
+namespace ZSZ.FrontWeb
 {
     public class MVCHelper
     {

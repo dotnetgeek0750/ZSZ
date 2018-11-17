@@ -19,8 +19,8 @@ namespace ZSZ.Service
                 //检查手机号不能重复
 
                 BaseService<UserEntity> bs = new BaseService<UserEntity>(ctx);
-                bool exists = bs.GetAll().Any(u=>u.PhoneNum==phoneNum);
-                if(exists)
+                bool exists = bs.GetAll().Any(u => u.PhoneNum == phoneNum);
+                if (exists)
                 {
                     throw new ArgumentException("手机号已经存在");
                 }
@@ -41,8 +41,8 @@ namespace ZSZ.Service
             using (ZSZDbContext ctx = new ZSZDbContext())
             {
                 BaseService<UserEntity> bs = new BaseService<UserEntity>(ctx);
-                var user = bs.GetAll().SingleOrDefault(u=>u.PhoneNum==phoneNum);
-                if(user==null)
+                var user = bs.GetAll().SingleOrDefault(u => u.PhoneNum == phoneNum);
+                if (user == null)
                 {
                     return false;
                 }
@@ -94,9 +94,9 @@ namespace ZSZ.Service
             {
                 BaseService<UserEntity> bs = new BaseService<UserEntity>(ctx);
                 var user = bs.GetById(userId);
-                if(user==null)
+                if (user == null)
                 {
-                    throw new ArgumentException("用户id不存在"+userId);
+                    throw new ArgumentException("用户id不存在" + userId);
                 }
                 user.CityId = cityId;
                 ctx.SaveChanges();
@@ -110,9 +110,9 @@ namespace ZSZ.Service
                 //检查手机号不能重复
                 BaseService<UserEntity> bs = new BaseService<UserEntity>(ctx);
                 var user = bs.GetById(userId);
-                if (user==null)
+                if (user == null)
                 {
-                    throw new ArgumentException("用户不存在 "+ userId);
+                    throw new ArgumentException("用户不存在 " + userId);
                 }
                 string salt = user.PasswordSalt;// CommonHelper.CreateVerifyCode(5);
                 string pwdHash = CommonHelper.CalcMD5(salt + newPassword);
@@ -120,6 +120,47 @@ namespace ZSZ.Service
                 user.PasswordSalt = salt;
                 ctx.SaveChanges();
             }
+        }
+
+        public void IncrLoginError(long id)
+        {
+            using (ZSZDbContext ctx = new ZSZDbContext())
+            {
+                //检查手机号不能重复
+                BaseService<UserEntity> bs = new BaseService<UserEntity>(ctx);
+                var user = bs.GetById(id);
+                if (user == null)
+                {
+                    throw new ArgumentException("用户不存在 " + id);
+                }
+                user.LoginErrorTimes++;
+                user.LastLoginErrorDateTime = DateTime.Now;
+                ctx.SaveChanges();
+            }
+        }
+
+        public void ResetLoginError(long id)
+        {
+            using (ZSZDbContext ctx = new ZSZDbContext())
+            {
+                //检查手机号不能重复
+                BaseService<UserEntity> bs = new BaseService<UserEntity>(ctx);
+                var user = bs.GetById(id);
+                if (user == null)
+                {
+                    throw new ArgumentException("用户不存在 " + id);
+                }
+                user.LoginErrorTimes = 0;
+                user.LastLoginErrorDateTime = null;
+                ctx.SaveChanges();
+            }
+        }
+
+        public bool IsLocked(long id)
+        {
+            var user = GetById(id);
+            return user.LoginErrorTimes >= 5
+                && user.LastLoginErrorDateTime >= DateTime.Now.AddMinutes(-30);
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ZSZ.Common
 {
-    class RuPengSMSResult
+    public class RuPengSMSResult
     {
         public int code { get; set; }
         public string msg { get; set; }

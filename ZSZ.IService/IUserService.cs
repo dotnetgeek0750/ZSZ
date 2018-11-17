@@ -18,5 +18,24 @@ namespace ZSZ.IService
         //设置用户userId的城市id
 
         void SetUserCityId(long userId, long cityId);
+
+        /// <summary>
+        /// 记录一次登陆失败
+        /// </summary>
+        /// <param name="id"></param>
+        void IncrLoginError(long id);
+
+        /// <summary>
+        /// 重置登陆失败信息
+        /// </summary>
+        /// <param name="id"></param>
+        void ResetLoginError(long id);
+
+        /// <summary>
+        /// 判断用户是否已经被锁定
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        bool IsLocked(long id);
     }
 }

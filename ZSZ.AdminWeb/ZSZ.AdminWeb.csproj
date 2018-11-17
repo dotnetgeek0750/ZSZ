@@ -1322,6 +1322,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\CheckPermissionAttribute.cs" />
+    <Compile Include="App_Start\JsonNetActionFilter.cs" />
+    <Compile Include="App_Start\JsonNetResult.cs" />
+    <Compile Include="App_Start\MVCHelper.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\TrimToDBCModelBinder.cs" />
     <Compile Include="App_Start\ZSZAuthorizationFilter.cs" />

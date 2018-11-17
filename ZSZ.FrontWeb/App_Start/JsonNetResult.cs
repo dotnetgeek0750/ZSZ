@@ -3,7 +3,7 @@ using System;
 using System.Web;
 using System.Web.Mvc;
 
-namespace ZSZ.CommonMVC
+namespace ZSZ.FrontWeb
 {
     public class JsonNetResult : JsonResult
     {

@@ -50,6 +50,9 @@
     <Reference Include="Autofac.Integration.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.Mvc5.4.0.2\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="CaptchaGen, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CaptchaGen.1.0.0\lib\net40\CaptchaGen.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -63,6 +66,9 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -164,7 +170,6 @@
     <Content Include="js\rem.js" />
     <Content Include="js\swiper.jquery.min.js" />
     <Content Include="js\swiper.min.js" />
-    <Content Include="js\tchuang.js" />
     <Content Include="js\yhq.js" />
     <Content Include="slick\ajax-loader.gif" />
     <Content Include="slick\slick.css" />
@@ -184,6 +189,9 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\JsonNetActionFilter.cs" />
+    <Compile Include="App_Start\JsonNetResult.cs" />
+    <Compile Include="App_Start\MVCHelper.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\TrimToDBCModelBinder.cs" />
     <Compile Include="App_Start\ZSZExceptionFilter.cs" />
@@ -192,6 +200,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserLoginModel.cs" />
+    <Compile Include="Models\UserRegModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -209,6 +219,8 @@
     <Content Include="slick\slick.scss" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Main\Index.cshtml" />
+    <Content Include="Views\Main\Register.cshtml" />
+    <Content Include="Views\Main\Login.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -218,7 +230,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
     <Folder Include="Views\Default\" />
   </ItemGroup>
   <ItemGroup>
@@ -229,6 +240,10 @@
     <ProjectReference Include="..\ZSZ.Common\ZSZ.Common.csproj">
       <Project>{4702e320-6789-4581-a6ec-17274947104c}</Project>
       <Name>ZSZ.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZSZ.DTO\ZSZ.DTO.csproj">
+      <Project>{71dc31d2-902e-461e-aba1-c4ed54aa0461}</Project>
+      <Name>ZSZ.DTO</Name>
     </ProjectReference>
     <ProjectReference Include="..\ZSZ.IService\ZSZ.IService.csproj">
       <Project>{2a248d4c-9411-45df-9472-46eee20506aa}</Project>
