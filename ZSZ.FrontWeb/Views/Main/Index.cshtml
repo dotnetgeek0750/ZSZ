@@ -1,8 +1,18 @@
 ﻿
+@model ZSZ.DTO.CityDTO[]
 @{
     ViewBag.Title = "首页";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<div id="divCities" style="display:none;position:absolute;z-index:100;">
+    <ul id="ulCities">
+        @foreach (var city in Model)
+        {
+            <li cityId="@city.Id">@city.Name</li>
+        }
+    </ul>
+</div>
 
 <!--header star-->
 <div class="header clearfloat">
@@ -10,8 +20,8 @@
         <img src="~/img/index-banner.jpg" />
     </div>
     <header class="mui-bar mui-bar-nav">
-        <a class="btn" href="#">
-            <p>北京<i class="iconfont icon-iconfontarrowdown-copy"></i></p>
+        <a id="btnCities" href="javascript:void(0)">
+            <p><span id="cityName">@ViewBag.CityName</span>  <i class="iconfont icon-iconfontarrowdown-copy"></i></p>
         </a>
         <div class="top-sch-box flex-col">
             <div class="centerflex">
@@ -240,6 +250,28 @@
                 }
             });
 
+
+            $("#btnCities").click(function () {
+                var left = $(this).offset().left;
+                var top = $(this).offset().top;
+                var height = $(this).height();
+                $("#divCities").toggle().css("left", left).css("top", top);
+            });
+
+            $("#ulCities li").click(function () {
+                var cityId = $(this).attr("cityId");
+                var cityName = $(this).text();
+                $.ajax({
+                    url: "/Main/SwitchCityId",
+                    type: "post",
+                    dataType: "json",
+                    data: { cityId: cityId},
+                    success: function (res) {
+                        $("#cityName").text(cityName);
+                        $("#divCities").hide();
+                    }
+                });
+            });
         });
     </script>
 }

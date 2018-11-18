@@ -13,13 +13,19 @@ namespace ZSZ.FrontWeb.Controllers
 {
     public class MainController : Controller
     {
+        public ICityService cityService { get; set; }
 
         public IUserService userService { get; set; }
 
         // GET: Main
         public ActionResult Index()
         {
-            return View();
+            var cityId = FrontUtils.GetCityId(HttpContext);
+            string cityName = cityService.GetById(cityId).Name;
+            ViewBag.CityName = cityName;
+
+            var cities = cityService.GetAll();
+            return View(cities);
         }
 
         public ActionResult Register()
@@ -137,6 +143,11 @@ namespace ZSZ.FrontWeb.Controllers
             {
                 //一旦登陆成功，就重置登陆失败信息
                 userService.ResetLoginError(user.Id);
+
+                //把当前登录用户信息存入session
+                Session["UserId"] = user.Id;
+                Session["CityId"] = user.CityId;
+
                 return Json(new AjaxResult { Status = "ok" });
             }
             else
@@ -147,6 +158,27 @@ namespace ZSZ.FrontWeb.Controllers
                 }
                 return Json(new AjaxResult { Status = "error", ErrorMsg = "用户名或密码错误" });
             }
+        }
+
+
+
+        /// <summary>
+        /// 切换当前用户的城市ID
+        /// </summary>
+        /// <param name="cityId"></param>
+        /// <returns></returns>
+        public ActionResult SwitchCityId(long cityId)
+        {
+            long? userId = FrontUtils.GetUserId(HttpContext);
+            if (userId == null)
+            {
+                Session["CityId"] = cityId;
+            }
+            else
+            {
+                userService.SetUserCityId((long)userId, cityId);
+            }
+            return Json(new AjaxResult { Status = "ok" });
         }
 
     }
