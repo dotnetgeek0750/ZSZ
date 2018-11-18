@@ -115,8 +115,8 @@ namespace ZSZ.Service
                 ctx.Entry(entity).State = EntityState.Deleted;
                 ctx.SaveChanges();*/
                 var entity = ctx.HousePics
-                    .SingleOrDefault(p => p.IsDeleted == false&&p.Id==housePicId);
-                if(entity!=null)
+                    .SingleOrDefault(p => p.IsDeleted == false && p.Id == housePicId);
+                if (entity != null)
                 {
                     ctx.HousePics.Remove(entity);
                     ctx.SaveChanges();
@@ -274,7 +274,77 @@ namespace ZSZ.Service
 
         public HouseSearchResult Search(HouseSearchOptions options)
         {
-            throw new NotImplementedException();
+            using (ZSZDbContext ctx = new ZSZDbContext())
+            {
+                BaseService<HouseEntity> bs = new BaseService<HouseEntity>(ctx);
+                var items = bs.GetAll().Where(p => p.Community.Region.CityId == options.CityId && p.TypeId == options.TypeId);
+                if (options.RegionId != null)
+                {
+                    items = items.Where(p => p.Community.RegionId == options.RegionId);
+                }
+                if (options.StartMonthRent != null)
+                {
+                    items = items.Where(p => p.MonthRent >= options.StartMonthRent);
+                }
+                if (options.EndMonthRent != null)
+                {
+                    items = items.Where(p => p.MonthRent <= options.EndMonthRent);
+                }
+                if (string.IsNullOrWhiteSpace(options.Keywords))
+                {
+                    items = items.Where(p => p.Address.Contains(options.Keywords)
+                       || p.Description.Contains(options.Keywords)
+                       || p.Community.Name.Contains(options.Keywords)
+                       || p.Community.Location.Contains(options.Keywords)
+                       || p.Community.Traffic.Contains(options.Keywords)
+                    );
+                }
+
+                var totalCount = items.LongCount();
+
+                items = items.Include(h => h.Attachments).Include(h => h.Community)
+                     .Include(h => nameof(HouseEntity.Community) + "." + nameof(CommunityEntity.Region)
+                         + "." + nameof(RegionEntity.City))
+                     .Include(h => nameof(HouseEntity.Community) + "." + nameof(CommunityEntity.Region))
+                     .Include(h => h.DecorateStatus)
+                     .Include(h => h.HousePics)
+                     .Include(h => h.RoomType)
+                     .Include(h => h.Status)
+                     .Include(h => h.Type);
+
+
+                switch (options.OrderByType)
+                {
+                    case OrderByType.MonthRentDesc:
+                        items = items.OrderByDescending(p => p.MonthRent);
+                        break;
+                    case OrderByType.MonthRentAsc:
+                        items = items.OrderBy(p => p.MonthRent);
+                        break;
+                    case OrderByType.AreaDesc:
+                        items = items.OrderByDescending(p => p.Area);
+                        break;
+                    case OrderByType.AreaAsc:
+                        items = items.OrderBy(p => p.Area);
+                        break;
+                    case OrderByType.CreateDateDesc:
+                        items = items.OrderByDescending(p => p.CreateDateTime);
+                        break;
+                    default:
+                        break;
+                }
+                items = items.Skip((options.CurrentIndex - 1) * options.PageSize).Take(options.PageSize);
+
+                HouseSearchResult searchResult = new HouseSearchResult();
+                searchResult.totalCount = totalCount;
+                List<HouseDTO> houses = new List<HouseDTO>();
+                foreach (var item in items)
+                {
+                    houses.Add(ToDTO(item));
+                }
+                searchResult.result = houses.ToArray();
+                return searchResult;
+            }
         }
 
         public void Update(HouseDTO house)
