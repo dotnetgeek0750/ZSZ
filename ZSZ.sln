@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSZ.CommonMVC", "ZSZ.Common
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSZ.Test", "ZSZ.Test\ZSZ.Test.csproj", "{597666C2-16C2-41B0-B7EA-1EE2594792B2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{6D98AF34-E0AD-4F54-991F-43E5C7B26017}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LockDemo", "LockDemo\LockDemo.csproj", "{D1E57BA8-1AB2-4FB3-8EBF-54C9DEE90EC2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,9 +61,16 @@ Global
 		{597666C2-16C2-41B0-B7EA-1EE2594792B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{597666C2-16C2-41B0-B7EA-1EE2594792B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{597666C2-16C2-41B0-B7EA-1EE2594792B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1E57BA8-1AB2-4FB3-8EBF-54C9DEE90EC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1E57BA8-1AB2-4FB3-8EBF-54C9DEE90EC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1E57BA8-1AB2-4FB3-8EBF-54C9DEE90EC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1E57BA8-1AB2-4FB3-8EBF-54C9DEE90EC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D1E57BA8-1AB2-4FB3-8EBF-54C9DEE90EC2} = {6D98AF34-E0AD-4F54-991F-43E5C7B26017}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ED700393-BCAA-4111-987F-4B4E8C01D2F2}

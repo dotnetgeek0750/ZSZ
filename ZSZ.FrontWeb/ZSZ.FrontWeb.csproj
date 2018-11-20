@@ -204,6 +204,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\HouseIndexViewModel.cs" />
+    <Compile Include="Models\HouseSearchViewModel.cs" />
     <Compile Include="Models\UserLoginModel.cs" />
     <Compile Include="Models\UserRegModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -231,6 +232,7 @@
     <Content Include="Views\User\ForgotPassword4.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\House\Index.cshtml" />
+    <Content Include="Views\House\Search.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

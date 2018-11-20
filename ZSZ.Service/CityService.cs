@@ -46,7 +46,7 @@ namespace ZSZ.Service
             using (var ctx = new ZSZDbContext())
             {
                 var bs = new BaseService<CityEntity>(ctx);
-                return bs.GetAll().AsNoTracking().Select(p => ToDTO(p)).ToArray();
+                return bs.GetAll().AsNoTracking().ToList().Select(p => ToDTO(p)).ToArray();
             }
         }
 

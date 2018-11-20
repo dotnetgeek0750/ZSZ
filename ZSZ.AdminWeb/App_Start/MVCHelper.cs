@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ using System.Web.Mvc;
 
 namespace ZSZ.AdminWeb.App_Start
 {
-    public class MVCHelper
+    public static class MVCHelper
     {
         // using System.Web.Mvc;
         //有两个ModelStateDictionary类，别弄混乱了。要使用System.Web.Mvc下的
@@ -28,5 +29,8 @@ namespace ZSZ.AdminWeb.App_Start
             }
             return sb.ToString();
         }
+
+
+
     }
 }
