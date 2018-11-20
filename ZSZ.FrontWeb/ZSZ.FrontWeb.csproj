@@ -204,6 +204,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\HouseIndexViewModel.cs" />
+    <Compile Include="Models\HouseMakeAppointmentModel.cs" />
     <Compile Include="Models\HouseSearchViewModel.cs" />
     <Compile Include="Models\UserLoginModel.cs" />
     <Compile Include="Models\UserRegModel.cs" />

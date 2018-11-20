@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ZSZ.CommonMVC;
 using ZSZ.DTO;
 using ZSZ.FrontWeb.Models;
 using ZSZ.IService;
@@ -14,8 +15,8 @@ namespace ZSZ.FrontWeb.Controllers
         public IHouseService houseService { get; set; }
         public IAttachmentService attachmentService { get; set; }
         public ICityService cityService { get; set; }
-
         public IRegionService regionService { get; set; }
+        public IHouseAppointmentService appService { get; set; }
 
         // GET: House
         public ActionResult Index(long id)
@@ -123,6 +124,23 @@ namespace ZSZ.FrontWeb.Controllers
             model.Houses = searchResult.result;
 
             return View(model);
+        }
+
+
+        public ActionResult MakeAppointment(HouseMakeAppointmentModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var msg = MVCHelper.GetValidMsg(ModelState);
+                return Json(new AjaxResult
+                {
+                    ErrorMsg = msg,
+                    Status = "error"
+                });
+            }
+            long? userId = FrontUtils.GetUserId(HttpContext);
+            appService.AddNew(userId, model.Name, model.PhoneNum, model.HouseId, model.VisitDate);
+            return Json(new AjaxResult { Status = "ok" });
         }
     }
 }

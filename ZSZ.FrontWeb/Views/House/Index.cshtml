@@ -171,18 +171,18 @@
         <ul>
             <li class="clearfloat">
                 <i class="iconfont icon-user"></i>
-                <input type="text" name="" id="" value="" placeholder="您的姓名" />
+                <input type="text" name="" id="name" value="" placeholder="您的姓名" />
             </li>
             <li class="clearfloat">
                 <i class="iconfont icon-phone"></i>
-                <input type="text" name="" id="" value="" placeholder="您的手机号码" />
+                <input type="text" name="" id="phoneNum" value="" placeholder="您的手机号码" />
             </li>
             <li class="clearfloat">
                 <i class="iconfont icon-calendar"></i>
-                <input type="text" name="" id="" value="" placeholder="请选择看房时间" />
+                <input type="text" name="" id="visitDate" value="" placeholder="请选择看房时间" />
             </li>
         </ul>
-        <input type="button" name="" id="" value="立即预约" class="btn" />
+        <input type="button" name="" id="btnMakeApp" value="立即预约" class="btn" />
     </div>
 </div>
 <!--弹窗内容 end-->
@@ -206,6 +206,33 @@
             top: 110,
             overlay: 0.45,
             closeButton: ".hidemodal"
+        });
+
+
+        $(function () {
+            $("#btnMakeApp").click(function () {
+                var houseId = @(Model.House.Id);
+                var name = $("#name").val();
+                var phoneNum = $("#phoneNum").val();
+                var visitDate = $("visitDate").val();
+                $.ajax({
+                    url: "House/MakeAppointment",
+                    date: { houseId: houseId, name: name, phoneNum: phoneNum, visitDate: visitDate },
+                    success: function (res) {
+                        if (res.status == "ok") {
+                            alert("预约成功，我们将很快和你联系");
+                            $("#lean_overlay").fadeOut(200);
+                            $("#loginmodal").css({ "display":"none"});
+                        }
+                        else {
+                            alert(res.errorMsg);
+                        }
+                    },
+                    error: function () {
+                        alert("网络请求出错");
+                    }
+                });
+            });
         });
 
     </script>
