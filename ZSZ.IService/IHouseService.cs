@@ -7,7 +7,7 @@ using ZSZ.DTO;
 
 namespace ZSZ.IService
 {
-    public interface IHouseService:IServiceSupport
+    public interface IHouseService : IServiceSupport
     {
         HouseDTO GetById(long id);
 
@@ -40,6 +40,13 @@ namespace ZSZ.IService
         HouseSearchResult Search(HouseSearchOptions options);
 
         long GetCount(long cityId, DateTime startDateTime, DateTime endDateTime);
+
+        /// <summary>
+        /// 得到CityID城市今天新增房源的数量
+        /// </summary>
+        /// <param name="cityId"></param>
+        /// <returns></returns>
+        int GetTodayNewHouseCount(long cityId);
     }
 
 }
