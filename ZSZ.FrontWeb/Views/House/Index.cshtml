@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<link rel="stylesheet" type="text/css" href="~/css/mui.picker.min.css" />
 
 <div class="headertwo clearfloat" id="header">
     <a href="javascript:history.go(-1)" class="fl box-s"><i class="iconfont icon-arrow-l fl"></i></a>
@@ -26,7 +27,7 @@
 <div class="clearfloat" id="main">
     <div class="service clearfloat">
         <div class="slider one-time">
-            
+
             @foreach (var pic in Model.Pics)
             {
                 <div>
@@ -89,7 +90,7 @@
             <p>房源描述</p>
         </div>
         <p class="tit box-s">
-           @Model.House.Description
+            @Model.House.Description
         </p>
     </div>
 
@@ -191,6 +192,7 @@
 {
     <script type="text/javascript" src="~/slick/slick.min.js"></script>
     <script type="text/javascript" src="~/js/jquery.leanModal.min.js"></script>
+    <script type="text/javascript" src="~/js/mui.picker.min.js"></script>
     <script type="text/javascript">
         $('.one-time').slick({
             dots: true,
@@ -233,6 +235,19 @@
                     }
                 });
             });
+
+            $("#visitDate").click(function () {
+                var dtPicker = new mui.DtPicker({type:'date'});
+                dtPicker.show(function (selectItems) {
+                    var y = selectItems.y.text;
+                    var m = selectItems.m.text;
+                    var d = selectItems.d.text;
+                    var visitDate = y + "-" + m + "-" + d;
+                    $("#visitDate").val(visitDate);
+                });
+            });
+
+
         });
 
     </script>
