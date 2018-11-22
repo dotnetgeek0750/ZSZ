@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ZSZ.DTO
 {
+    [Serializable]
     public class HousePicDTO : BaseDTO
     {
         public long HouseId { get; set; }
