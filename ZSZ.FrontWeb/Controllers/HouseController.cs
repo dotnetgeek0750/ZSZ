@@ -21,6 +21,7 @@ namespace ZSZ.FrontWeb.Controllers
         // GET: House
         public ActionResult Index(long id)
         {
+            /*
             var house = houseService.GetById(id);
             if (house == null)
             {
@@ -34,7 +35,29 @@ namespace ZSZ.FrontWeb.Controllers
                 Pics = pics,
                 Attachments = attachments,
             };
-            return View();
+            */
+
+            //缓存优化
+            string cacheKey = "HouseIndex_" + id;
+            HouseIndexViewModel model = (HouseIndexViewModel)HttpContext.Cache[cacheKey];
+            if (model == null)
+            {
+                var house = houseService.GetById(id);
+                if (house == null)
+                {
+                    return View("Error", (object)"不存在的房源ID");
+                }
+                var pics = houseService.GetPics(id);
+                var attachments = attachmentService.GetAttachments(id);
+                model = new HouseIndexViewModel
+                {
+                    House = house,
+                    Pics = pics,
+                    Attachments = attachments,
+                };
+                HttpContext.Cache.Insert(cacheKey, model, null, DateTime.Now.AddMinutes(1), TimeSpan.Zero);
+            }
+            return View(model);
         }
 
 
