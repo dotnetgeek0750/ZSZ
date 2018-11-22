@@ -7,6 +7,7 @@ using ZSZ.DTO;
 using ZSZ.IService;
 using ZSZ.Service.Entities;
 using System.Data.Entity;
+using System.Data.Entity.SqlServer;
 
 namespace ZSZ.Service
 {
@@ -379,6 +380,17 @@ namespace ZSZ.Service
                 entity.TotalFloorCount = house.TotalFloorCount;
                 entity.TypeId = house.TypeId;
                 ctx.SaveChanges();
+            }
+        }
+
+        public int GetTodayNewHouseCount(long cityId)
+        {
+            using (var ctx = new ZSZDbContext())
+            {
+                BaseService<HouseEntity> bs = new BaseService<HouseEntity>(ctx);
+                return bs.GetAll().Where(p => p.Community.Region.CityId == cityId
+                && SqlFunctions.DateDiff("hh", p.CreateDateTime, DateTime.Now) <= 24)
+                .Count();
             }
         }
     }

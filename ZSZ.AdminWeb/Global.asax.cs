@@ -1,5 +1,8 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
+using Quartz;
+using Quartz.Impl;
+using Quartz.Spi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +11,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using ZSZ.AdminWeb.App_Start;
+using ZSZ.AdminWeb.Jobs;
 using ZSZ.IService;
 
 namespace ZSZ.AdminWeb
@@ -53,6 +57,25 @@ namespace ZSZ.AdminWeb
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));//!!! 
 
             #endregion
+
+
+            StartQuartz();
+        }
+
+
+        private void StartQuartz()
+        {
+            IScheduler sched = new StdSchedulerFactory().GetScheduler();
+
+            //==============BossReportJob 开始================
+            JobDetailImpl jdBossReport = new JobDetailImpl("jdBossReportJob", typeof(BossReportJob));
+            IMutableTrigger triggerBossReport = CronScheduleBuilder.DailyAtHourAndMinute(23, 45).Build();//每天23:45执行一次
+            triggerBossReport.Key = new TriggerKey("triggerBossReportJob");
+            sched.ScheduleJob(jdBossReport, triggerBossReport);
+            //==============BossReportJob 结束================
+
+
+            sched.Start();
         }
     }
 }
